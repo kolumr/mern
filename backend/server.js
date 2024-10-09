@@ -3,12 +3,26 @@ import dotenv from "dotenv"
 import { connectionDB } from "./config/db.js";
 import Product from "./models/productmodel.js";
 
-dotenv.config()
+dotenv.config();
+
 const app = express();
+
 app.use(express.json()); //midleware that allows us to send data in json format from the api endpoints
+
 app.get('/', (req,res)=> {
     res.send('Started')
-})
+});
+
+app.get('/api/products', async (req,res)=>{
+    try {
+        const products = await Product.find({});
+        res.status(201).json({success:true, data: products});
+    } catch (error) {
+        console.error("Error in fetching products", error.message);
+        res.status(500).json({ success:"false", message: "Server Error"});
+    }
+});
+
 app.post('/api/products', async (req,res)=>{
     const product = req.body; //user will send this data
 
@@ -25,7 +39,7 @@ app.post('/api/products', async (req,res)=>{
         console.error("Error in creating product", error.message);
         res.status(500).json({ success:"false", message: "Server Error"});
     }
-})
+});
 
 app.delete('/api/products/:id', async (req,res) => {
     const {id} = req.params;
@@ -36,8 +50,9 @@ app.delete('/api/products/:id', async (req,res) => {
     } catch (error) {
         res.status(404).json( {success: false, message: "Product not found"})
     }
-})
+});
+
 app.listen(3000, () =>{
     connectionDB();
     console.log('Server started at 3000');
-})
+});
