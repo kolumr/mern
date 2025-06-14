@@ -13,8 +13,10 @@
   "dependencies": {
     "@chakra-ui/react": "^3.21.0",
     "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "framer-motion": "^12.17.0",
     "mongoose": "^8.15.1"
   },
   "devDependencies": {
