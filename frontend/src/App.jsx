@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
+import ProductCard from "./components/productCard";
 
 
 function App() {
   const [products, setProducts] = useState([])
-  const [cart, setCart] = useState([]);
   useEffect(() => {
     fetch('http://localhost:5000/api/products')
       .then(response => response.json())
-      .then(data =>{ setProducts(data); console.log(data) })
+      .then(data =>{ setProducts(data);})
       .catch(error => console.error('Error fetching products:', error));
   }
   , []);
@@ -135,7 +135,15 @@ function App() {
   </header>
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      {/* <!-- Your content --> */}
+      {products?.data?.length > 0 ? (
+        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {products?.data?.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <p>No products found.</p>
+      )}
     </div>
   </main>
 </div>
