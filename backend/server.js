@@ -2,8 +2,15 @@ import express from 'express';
 import dotenv from 'dotenv'
 import { connectDB } from './config/db.js';
 import Product from './models/products.model.js';
+import cors from 'cors';
 
 const app = express();
+
+// Enable CORS
+app.use(cors({
+  origin: 'http://localhost:5173', // React frontend
+  credentials: true,              // if using cookies or sessions
+}));
 
 dotenv.config();
 

@@ -1,6 +1,16 @@
+import { useEffect, useState } from "react"
 
 
 function App() {
+  const [products, setProducts] = useState([])
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:5000/api/products')
+      .then(response => response.json())
+      .then(data =>{ setProducts(data); console.log(data) })
+      .catch(error => console.error('Error fetching products:', error));
+  }
+  , []);
   return (
 //     <!--
 //   This example requires updating your template:
